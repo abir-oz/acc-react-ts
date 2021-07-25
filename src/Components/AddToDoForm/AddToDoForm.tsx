@@ -9,6 +9,7 @@ const AddToDoForm: React.FC<Props> = ({ addTodo }) => {
 
   return (
     <form
+      className="form"
       onSubmit={(e) => {
         e.preventDefault();
         addTodo(task);
@@ -18,7 +19,7 @@ const AddToDoForm: React.FC<Props> = ({ addTodo }) => {
       <input
         value={task}
         type="text"
-        onChange={(e) => setTask(e.target.value)}
+        onChange={(e) => e.target.value !== " " && setTask(e.target.value)}
       />
       <button type="submit"> Add ToDo</button>
     </form>

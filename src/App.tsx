@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GlobalStyle, Wrapper } from "./App.styles";
 import AddToDoForm from "./Components/AddToDoForm/AddToDoForm";
 import ToDoList from "./Components/ToDoList/ToDoList";
 
@@ -19,6 +20,7 @@ const initialToDos: Todo[] = [
 
 const App = () => {
   const [toDos, setToDos] = useState(initialToDos);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const toggleToDo = (selectedTodo: Todo) => {
     const newToDos = toDos.map((todo) => {
@@ -34,16 +36,25 @@ const App = () => {
   };
 
   const addTodo: AddTodo = (task: string) => {
+    if (task === "") {
+      setErrorMessage("Please enter a task");
+      return;
+    }
+    setErrorMessage(" ");
     const newTodo = { task, completed: false };
     setToDos([...toDos, newTodo]);
   };
 
   return (
-    <div>
-      <h1>React TODO APP</h1>
-      <AddToDoForm addTodo={addTodo} />
-      <ToDoList toDos={toDos} toggleToDo={toggleToDo} />
-    </div>
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <h1>React TODO APP</h1>
+        <AddToDoForm addTodo={addTodo} />
+        {errorMessage !== "" ? <p className="errorMsg">{errorMessage}</p> : ""}
+        <ToDoList toDos={toDos} toggleToDo={toggleToDo} />
+      </Wrapper>
+    </>
   );
 };
 
